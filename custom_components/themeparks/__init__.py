@@ -109,7 +109,7 @@ class ThemeParkAPI:
                 {
                     ID: item[ID],
                     NAME: name,
-                    TIME: item[QUEUE][STANDBY][WAIT_TIME],
+                    TIME: item[QUEUE][STANDBY].get(WAIT_TIME),
                 },
             )
 
