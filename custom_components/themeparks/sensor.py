@@ -58,7 +58,21 @@ class AttractionSensor(SensorEntity, CoordinatorEntity):
         self._attr_native_value = self.coordinator.data[self.idx][TIME]
         self._attr_unique_id = f"{coordinator.entry_id}_{coordinator.data[idx][ID]}"
 
+        self._park_name = coordinator.hass.config_entries.async_get_entry(coordinator.entry_id).title
+
         _LOGGER.debug("Adding AttractionSensor called %s", self._attr_name)
+
+    @property
+    def device_info(self):
+        """Return device info."""
+        from homeassistant.helpers.entity import DeviceInfo
+        return DeviceInfo(
+            identifiers={(DOMAIN, self.coordinator.entry_id)},
+            name=self._park_name,
+            manufacturer="ThemeParks.wiki",
+            model="Theme Park",
+            entry_type="service",
+        )
 
     @callback
     def _handle_coordinator_update(self) -> None:
