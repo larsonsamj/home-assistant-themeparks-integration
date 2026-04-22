@@ -90,17 +90,20 @@ class AttractionSensor(SensorEntity, CoordinatorEntity):
 class ThemeParksCoordinator(DataUpdateCoordinator):
     """Theme parks coordinator."""
 
-    def __init__(self, hass, api, entry_id):
-        self.config_entry = config_entry
+    def __init__(self, hass, api, entry_id, config_entry):
+        _LOGGER.warning("SCAN INTERVAL BEING SET TO: %s", config_entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL))
         """Initialize theme parks coordinator."""
         super().__init__(
             hass,
             _LOGGER,
             name="Theme Park Wait Time Sensor",
-            update_interval=timedelta(minutes=config_entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)),
+            update_interval=timedelta(
+                minutes=int(config_entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL))
+            ),
         )
         self.api = api
         self.entry_id = entry_id
+        self.config_entry = config_entry
 
     async def _async_update_data(self):
         """Fetch data from API endpoint."""

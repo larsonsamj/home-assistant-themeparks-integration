@@ -7,5 +7,16 @@
                 }
             }
         }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Theme Park Settings",
+                "description": "Configure how often to fetch wait times (currently {current} minutes).",
+                "data": {
+                    "scan_interval": "Poll Interval (minutes)"
+                }
+            }
+        }
     }
 }
