@@ -134,4 +134,5 @@ class ThemeParkAPI:
                 item[ENTITY_TYPE] == TYPE_SHOW or item[ENTITY_TYPE] == TYPE_ATTRACTION
             )
 
-        return filter(filter_item, items_data[LIVE_DATA])
+        data = items_data if isinstance(items_data, list) else items_data.get(LIVE_DATA, [])
+        return filter(filter_item, data)
