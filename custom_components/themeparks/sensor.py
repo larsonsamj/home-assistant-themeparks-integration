@@ -18,7 +18,7 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
 
-from .const import DOMAIN, NAME, TIME, ID
+from .const import DOMAIN, NAME, TIME, ID, CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ async def async_setup_entry(
     """Set up the sensor platform."""
 
     my_api = hass.data[DOMAIN][config_entry.entry_id]
-    coordinator = ThemeParksCoordinator(hass, my_api, config_entry.entry_id)
+    coordinator = ThemeParksCoordinator(hass, my_api, config_entry.entry_id, config_entry)
 
     await coordinator.async_config_entry_first_refresh()
 
@@ -91,12 +91,13 @@ class ThemeParksCoordinator(DataUpdateCoordinator):
     """Theme parks coordinator."""
 
     def __init__(self, hass, api, entry_id):
+        self.config_entry = config_entry
         """Initialize theme parks coordinator."""
         super().__init__(
             hass,
             _LOGGER,
             name="Theme Park Wait Time Sensor",
-            update_interval=timedelta(minutes=5),
+            update_interval=timedelta(minutes=config_entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)),
         )
         self.api = api
         self.entry_id = entry_id

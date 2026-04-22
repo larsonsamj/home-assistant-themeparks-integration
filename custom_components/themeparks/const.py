@@ -5,6 +5,9 @@ DOMAIN = "themeparks"
 PARKSLUG = "parkslug"
 PARKNAME = "parkname"
 
+CONF_SCAN_INTERVAL = "scan_interval"
+DEFAULT_SCAN_INTERVAL = 5
+
 BASE_URL = "https://api.themeparks.wiki/v1"
 DESTINATIONS_URL = "%s/destinations" % BASE_URL
 ENTITY_BASE_URL = "%s/entity" % BASE_URL
